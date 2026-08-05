@@ -1,0 +1,72 @@
+generated: '2026-08-05'
+method: probed
+source: well-known/place-sso-openid-configuration.json, well-known/place-hub-openid-configuration.json
+scope_of_this_file: >-
+  PLACE publishes no product API, so there is no OpenAPI securityScheme set to derive
+  from. What follows is the authentication surface PLACE actually exposes publicly:
+  the OpenID Connect / OAuth 2.0 metadata served from its own single-sign-on hosts.
+  It describes how humans and applications sign in to the PLACE platform — it is NOT
+  evidence of a consumable product API.
+summary:
+  types: [openIdConnect, oauth2]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, implicit, refreshToken, password, deviceCode, ciba]
+  pkce: [S256]
+  dpop_supported: true
+  mtls_supported: false
+  identity_vendor: Okta
+schemes:
+- name: PLACE SSO (OpenID Connect)
+  type: openIdConnect
+  issuer: https://sso.place.com
+  openIdConnectUrl: https://sso.place.com/.well-known/openid-configuration
+  endpoints:
+    authorization: https://sso.place.com/oauth2/v1/authorize
+    token: https://sso.place.com/oauth2/v1/token
+    userinfo: https://sso.place.com/oauth2/v1/userinfo
+    jwks: https://sso.place.com/oauth2/v1/keys
+    introspection: https://sso.place.com/oauth2/v1/introspect
+    revocation: https://sso.place.com/oauth2/v1/revoke
+    end_session: https://sso.place.com/oauth2/v1/logout
+    device_authorization: https://sso.place.com/oauth2/v1/device/authorize
+    registration: https://sso.place.com/oauth2/v1/clients
+  grant_types: [authorization_code, implicit, refresh_token, password, 'urn:ietf:params:oauth:grant-type:device_code']
+  token_endpoint_auth_methods: [client_secret_basic, client_secret_post, client_secret_jwt, private_key_jwt, none]
+  id_token_signing_alg: [RS256]
+  code_challenge_methods: [S256]
+  sources: [well-known/place-sso-openid-configuration.json]
+- name: PLACE SSO custom authorization server ("default")
+  type: openIdConnect
+  issuer: https://sso.place.com/oauth2/default
+  openIdConnectUrl: https://sso.place.com/oauth2/default/.well-known/openid-configuration
+  observed_use: >-
+    learn.place.com redirects unauthenticated visitors to
+    https://sso.place.com/oauth2/default/v1/authorize with scope "openid profile email".
+  grant_types: [authorization_code, implicit, refresh_token, password, 'urn:ietf:params:oauth:grant-type:device_code']
+  code_challenge_methods: [S256]
+  sources: [well-known/place-sso-default-openid-configuration.json]
+- name: PLACE identity hub
+  type: openIdConnect
+  issuer: https://hub.place.com
+  openIdConnectUrl: https://hub.place.com/.well-known/openid-configuration
+  endpoints:
+    authorization: https://hub.place.com/oauth2/v1/authorize
+    token: https://hub.place.com/oauth2/v1/token
+    userinfo: https://hub.place.com/oauth2/v1/userinfo
+    jwks: https://hub.place.com/oauth2/v1/keys
+    introspection: https://hub.place.com/oauth2/v1/introspect
+    revocation: https://hub.place.com/oauth2/v1/revoke
+    end_session: https://hub.place.com/oauth2/v1/logout
+    pushed_authorization_request: https://hub.place.com/oauth2/v1/par
+    device_authorization: https://hub.place.com/oauth2/v1/device/authorize
+    registration: https://hub.place.com/oauth2/v1/clients
+  grant_types: [authorization_code, implicit, refresh_token, password, 'urn:ietf:params:oauth:grant-type:device_code', 'urn:openid:params:grant-type:ciba']
+  code_challenge_methods: [S256]
+  dpop_signing_algs: [RS256, RS384, RS512, ES256, ES384, ES512]
+  sources: [well-known/place-hub-openid-configuration.json]
+not_found:
+  api_keys: no public API-key issuance surface is published
+  mutual_tls: not advertised in any discovery document
+  developer_credentials: >-
+    Dynamic client registration endpoints exist (Okta default) but PLACE publishes no
+    developer program, so no third party can obtain credentials for a product API.

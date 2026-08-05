@@ -1,0 +1,101 @@
+generated: '2026-08-05'
+method: probed
+source: live GET of /.well-known/* on every PLACE host discovered via certificate transparency
+note: >-
+  PLACE publishes no product API and no developer portal. The only machine-readable
+  discovery documents it serves are OAuth 2.0 / OpenID Connect metadata from its
+  single-sign-on hosts. Two of those hosts (sso.place.com, hub.place.com) are Okta
+  custom domains operated for PLACE; hq.place.com is a Thinkific-hosted learning site
+  on a PLACE custom domain whose discovery document declares a third-party issuer
+  (https://courses.thinkific.com) and is therefore recorded but NOT attributed to PLACE.
+hosts:
+- host: https://place.com
+  role: marketing website (WordPress)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://sso.place.com
+  role: PLACE single sign-on / OpenID Connect provider (Okta custom domain)
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: place-sso-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: place-sso-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /oauth2/default/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: place-sso-default-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+    note: custom "default" authorization server used by learn.place.com
+  - path: /oauth2/default/.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: place-sso-default-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/security.txt
+    status: 405
+- host: https://hub.place.com
+  role: PLACE identity hub (Okta custom domain)
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: place-hub-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: place-hub-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://hq.place.com
+  role: learning platform on a PLACE custom domain (vendor-hosted)
+  vendor: Thinkific
+  attributed_to_place: false
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: place-hq-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+    issuer: https://courses.thinkific.com
+rejected:
+  note: >-
+    These hosts answered 200 with an HTML body for every /.well-known/* path — the
+    single-page-app / vendor catch-all false positive. Rejected, not recorded as hits.
+  hosts:
+  - host: https://our.place.com
+    paths: [/.well-known/agent-card.json, /.well-known/agent.json, /.well-known/security.txt]
+    observed: 200 text/html (SSO redirect shell)
+  - host: https://referrals.place.com
+    paths: [/.well-known/agent-card.json, /.well-known/agent.json, /openapi.json, /swagger.json, /graphql]
+    observed: 200 text/html ("Referral Rock - No Site Available")
+security_txt: null
+api_catalog: null

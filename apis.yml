@@ -1,8 +1,19 @@
 aid: place
 name: PLACE
-description: 'PLACE is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'PLACE, Inc. is a Bellingham, Washington real estate technology and business-services
+  company founded in 2020 by Ben Kinney and Chris Suarez. It sells an end-to-end operating
+  platform to real estate teams, agents and brokerages — a CRM with lead-generation
+  websites, transaction management, automated marketing, mobile apps and AI tooling —
+  bundled with shared back-office services covering accounting, hiring, training,
+  finance and digital advertising, plus adjacent mortgage, title and escrow, insurance,
+  property management and home-services offerings. PLACE partners with teams in 500+
+  locations across the United States and Canada, raised a $100M Series A led by a
+  division of Goldman Sachs Asset Management at unicorn valuation, and acquired MLS
+  data platform Remine to extend its technology ecosystem. The platform is delivered
+  only to contracted teams behind single sign-on; PLACE publishes no public API,
+  developer portal, SDK or machine-readable specification.'
 url: https://raw.githubusercontent.com/api-evangelist/place/refs/heads/main/apis.yml
+image: https://place.com/wp-content/uploads/2025/12/Group-8805.jpg
 x-type: company
 x-source: harvest:secondary-market
 x-tier: stub
@@ -12,6 +23,17 @@ created: '2026-08-05'
 modified: '2026-08-05'
 tags:
 - Company
+- Real Estate
+- Property Technology
+- PropTech
+- CRM
+- Transaction Management
+- Brokerage
+- MLS
+- Mortgage
+- Title and Escrow
+- Business Services
+- Identity
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -19,5 +41,73 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/place-domain-security.yml
+- type: WellKnown
+  url: well-known/place-well-known.yml
+- type: Authentication
+  url: authentication/place-authentication.yml
+- type: OAuthScopes
+  url: scopes/place-scopes.yml
+- type: Conformance
+  url: conformance/place-conformance.yml
+- type: LLMsTxt
+  url: llms/place-llms.txt
+- type: GitHubOrganization
+  url: https://github.com/PLACE-INC
 - type: Website
+  url: https://place.com/
+- type: Platform
+  url: https://place.com/platform/
+- type: Technology
+  url: https://place.com/real-estate-technology/
+- type: About
+  url: https://place.com/about-place/
+- type: Blog
+  url: https://place.com/blog/
+- type: BlogRSS
+  url: https://place.com/feed/
+- type: Press
+  url: https://place.com/press/
+- type: Support
+  url: https://place.com/contact/
+- type: SignUp
+  url: https://place.com/join/
+- type: Login
+  url: https://place.com/login/
+- type: TermsOfService
+  url: https://place.com/terms/
+- type: PrivacyPolicy
+  url: https://place.com/privacy-policy/
+- type: Careers
+  url: https://place.com/careers/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/placeinc
+- type: SecondaryMarketListing
   url: https://forgeglobal.com/place_stock/
+x-enrichment:
+  date: '2026-08-05'
+  status: minimal
+  artifacts_added: 13
+  pass: local-v1
+x-coverage:
+  state: none
+  reason: no-developer-program
+  detail: >-
+    PLACE ships its real-estate operating platform only to contracted teams behind
+    Okta single sign-on — there is no developer.place.com, docs.place.com or
+    api.place.com host in DNS, the platform page never mentions an API, and the only
+    machine-readable documents on any PLACE host are the OIDC/OAuth discovery blobs
+    its sign-on servers emit.
+  evidence:
+  - url: https://developer.place.com/
+    status: 0
+  - url: https://place.com/llms.txt
+    status: 404
+  - url: https://place.com/.well-known/api-catalog
+    status: 404
+  - url: https://place.com/platform/
+    status: 200
+  - url: https://sso.place.com/.well-known/openid-configuration
+    status: 200
+  checked: '2026-08-05'

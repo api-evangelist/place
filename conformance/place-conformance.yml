@@ -1,0 +1,78 @@
+generated: '2026-08-05'
+method: derived
+source: well-known/ discovery documents probed 2026-08-05
+note: >-
+  Derived strictly from the OAuth/OIDC discovery documents PLACE serves. No PLACE
+  compliance program, certification list or trust center was found, so no `Compliance`
+  pointer is claimed.
+standards:
+- id: openid-connect-discovery-1.0
+  conforms: true
+  evidence: '/.well-known/openid-configuration returns 200 application/json on sso.place.com
+    and hub.place.com with issuer, authorization_endpoint, token_endpoint, jwks_uri.'
+- id: oauth2
+  conforms: true
+  evidence: authorization_endpoint + token_endpoint + documented grant_types_supported.
+- id: rfc8414-authorization-server-metadata
+  conforms: true
+  evidence: '/.well-known/oauth-authorization-server returns 200 on sso.place.com and
+    hub.place.com.'
+- id: rfc7636-pkce
+  conforms: true
+  evidence: 'code_challenge_methods_supported: [S256] on every PLACE issuer.'
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: revocation_endpoint published (/oauth2/v1/revoke).
+- id: rfc7662-token-introspection
+  conforms: true
+  evidence: introspection_endpoint published (/oauth2/v1/introspect).
+- id: rfc8628-device-authorization-grant
+  conforms: true
+  evidence: device_authorization_endpoint published and urn:ietf:params:oauth:grant-type:device_code
+    in grant_types_supported.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint published (/oauth2/v1/clients).
+- id: rfc9126-pushed-authorization-requests
+  conforms: true
+  scope: hub.place.com only
+  evidence: pushed_authorization_request_endpoint https://hub.place.com/oauth2/v1/par
+- id: rfc9449-dpop
+  conforms: true
+  evidence: dpop_signing_alg_values_supported [RS256 RS384 RS512 ES256 ES384 ES512].
+- id: openid-connect-ciba
+  conforms: true
+  scope: hub.place.com only
+  evidence: 'urn:openid:params:grant-type:ciba in grant_types_supported; backchannel_token_delivery_modes_supported:
+    [poll].'
+- id: openapi
+  conforms: false
+  evidence: No OpenAPI/Swagger document found on any PLACE host (see x-coverage).
+- id: asyncapi
+  conforms: false
+  evidence: No event, webhook or streaming surface published.
+- id: graphql
+  conforms: false
+  evidence: No /graphql endpoint; the 200s observed were HTML SPA catch-alls.
+- id: a2a
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on
+    place.com, sso.place.com and hub.place.com; HTML 200s on our.place.com and referrals.place.com
+    were rejected as SPA catch-alls.
+- id: mcp
+  conforms: false
+  evidence: No hosted MCP server advertised or resolvable.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: https://place.com/.well-known/security.txt returns 404.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No API responses to evaluate.
+deviations:
+- id: implicit-grant-enabled
+  detail: >-
+    Every PLACE issuer still advertises the implicit grant and the resource-owner
+    password grant, both discouraged by OAuth 2.0 Security Best Current Practice
+    (RFC 9700) and removed in OAuth 2.1.
+- id: no-mtls
+  detail: No mutual-TLS client authentication advertised (tls_client_auth absent).
