@@ -48,8 +48,7 @@ created: '2026-08-05'
 modified: '2026-08-05'
 tags:
 - Company
-- Real-Estate
-- Property Technology
+- Real Estate
 - PropTech
 - CRM
 - Transaction Management
@@ -72,6 +71,7 @@ tags_raw:
 - Title and Escrow
 - Business Services
 - Identity
+- Real-Estate
 apis: []
 maintainers:
 - FN: Kin Lane
