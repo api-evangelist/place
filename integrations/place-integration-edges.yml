@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/place/integrations
 - https://n8n.io/integrations/place/
@@ -9,8 +9,29 @@ checked:
 - https://composio.dev/toolkits/place
 - https://monid.ai/tools/place
 - https://n8n.io/integrations/place/
+- https://services.reso.org/orgs?showStats=true&showEndorsements=true
 - https://zapier.com/apps/place/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: RESO
+  partner: reso
+  type: contract
+  channel: network-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://services.reso.org/orgs?showStats=true&showEndorsements=true
+  contract_reference:
+    register: RESO organizations and endorsements (Real Estate Standards Organization)
+    spec_file: null
+    role: Technology Company
+    tier: Uncertified
+    registered_name: PLACE
+    organization_uoi: T00000134
+    matched_domain: place.com
+    matched_by: domain
+    endorsements: null
+    summary_url: https://certification.reso.org/summary/T00000134
+    detected_by: sweep-real-estate.py
+    detected: '2026-10-13'
 templates: []
